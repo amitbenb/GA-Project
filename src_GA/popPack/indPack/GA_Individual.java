@@ -153,6 +153,7 @@ abstract public class GA_Individual
 		GA_Atom[] newGenome1 = new GA_Atom[idx1 + (genome2.length - idx2)];
 		GA_Atom[] newGenome2 = new GA_Atom[idx2 + (genome1.length - idx1)];
 		
+		//TODO Fixed?
 		for (int i = 0; i < newGenome1.length; i++)
 		{
 			if(i<idx1)
@@ -161,7 +162,7 @@ abstract public class GA_Individual
 			}
 			else // (i>=idx1)
 			{
-				newGenome1[i] = genome2[i-idx1].selfReplicate();
+				newGenome1[i] = genome2[i-idx1+idx2].selfReplicate();
 			}
 		}
 		
@@ -173,7 +174,7 @@ abstract public class GA_Individual
 			}
 			else // (i>=idx2)
 			{
-				newGenome2[i] = genome1[i-idx2].selfReplicate();
+				newGenome2[i] = genome1[i-idx2+idx1].selfReplicate();
 			}
 		}
 	}
