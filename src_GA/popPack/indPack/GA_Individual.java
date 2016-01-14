@@ -159,8 +159,11 @@ abstract public class GA_Individual
 		GA_Atom[] genome1 = ind1.getGenome();
 		GA_Atom[] genome2 = ind2.getGenome();
 		
-		int idx1 = (int)(Math.random() * (genome1.length+1));
-		int idx2 = (int)(Math.random() * (genome2.length+1));
+		// Choosing close XO points to slow code growth
+		double rand = Math.random();
+		double noise = Math.random() / 5;
+		int idx1 = (int)((rand + noise*(1-rand)) * (genome1.length+1));
+		int idx2 = (int)((rand - noise*(rand)) * (genome2.length+1));
 		
 		GA_Atom[] newGenome1 = new GA_Atom[idx1 + (genome2.length - idx2)];
 		GA_Atom[] newGenome2 = new GA_Atom[idx2 + (genome1.length - idx1)];
