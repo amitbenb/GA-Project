@@ -10,6 +10,9 @@ import popPack.BasicBuilder;
 abstract public class GA_Individual
 {
 	public static final int DEFAULT_SIZE_OF_MARKER_ARRAY = 200;
+
+	public static int init_genome_size = 60;
+	public static int genome_size_limit= 150;
 	
 	protected GA_Atom[] m_genome;
 	protected int[] m_markers = new int[DEFAULT_SIZE_OF_MARKER_ARRAY];
@@ -86,6 +89,11 @@ abstract public class GA_Individual
 		m_dynamicFitness = fitness;
 	}
 
+	public void setGenome(GA_Atom[] genome)
+	{
+		m_genome = genome;
+	}
+	
 	public void setFitness(double fitness)
 	{
 		setStaticFitness(fitness);
@@ -137,16 +145,20 @@ abstract public class GA_Individual
 		
 		// For now just one default XO operator.
 		twoPointCrossover(ind1, ind2);
-	}
-	
-	public static void twoPointCrossover(GA_Individual ind1, GA_Individual ind2)
-	{
-		twoPointCrossover(ind1.getGenome(),
-				ind2.getGenome());	
+
+		for (int i = 0; i < ind2.getGenome().length; i++)
+		{
+			if (ind2.getGenome()[i] == null)
+				System.out.println("BBBB");
+		}
+		
 	}
 
-	private static void twoPointCrossover(GA_Atom[] genome1, GA_Atom[] genome2)
+	public static void twoPointCrossover(GA_Individual ind1, GA_Individual ind2)
 	{
+		GA_Atom[] genome1 = ind1.getGenome();
+		GA_Atom[] genome2 = ind2.getGenome();
+		
 		int idx1 = (int)(Math.random() * (genome1.length+1));
 		int idx2 = (int)(Math.random() * (genome2.length+1));
 		
@@ -177,6 +189,25 @@ abstract public class GA_Individual
 				newGenome2[i] = genome1[i-idx2+idx1].selfReplicate();
 			}
 		}
+
+//		newGenome1 = new GA_Atom[genome1.length];
+//		newGenome2 = new GA_Atom[genome2.length];
+//		for (int i = 0; i < newGenome1.length; i++)
+//			newGenome1[i] = genome1[i];
+//		for (int i = 0; i < newGenome2.length; i++)
+//			newGenome2[i] = genome2[i];
+
+		if (newGenome1.length <= GA_Individual.genome_size_limit)
+			ind1.setGenome(newGenome1);
+		if (newGenome2.length <= GA_Individual.genome_size_limit)
+			ind2.setGenome(newGenome2);
+		
+	}
+
+	private static Exception RuntimeException(String string)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public void mutate(double mutProb)
