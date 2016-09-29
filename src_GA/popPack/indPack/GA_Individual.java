@@ -62,6 +62,11 @@ abstract public class GA_Individual
 		return m_genome;
 	}
 		
+	public GA_Atom getGene(int idx)
+	{
+		return m_genome[idx];
+	}
+		
 	public double getFitness()
 	{
 		return getStaticFitness();
@@ -77,6 +82,10 @@ abstract public class GA_Individual
 		return m_markers[idx];
 	}
 		
+	public int getGenomeSize()
+	{
+		return m_genome.length;
+	}
 	
 	// Setters
 	public void setStaticFitness(double fitness)
@@ -205,12 +214,6 @@ abstract public class GA_Individual
 		if (newGenome2.length <= GA_Individual.genome_size_limit)
 			ind2.setGenome(newGenome2);
 		
-	}
-
-	private static Exception RuntimeException(String string)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public void mutate(double mutProb)

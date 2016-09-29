@@ -15,6 +15,9 @@ public class GA_Population
 	
 	protected GA_Individual[] m_pop = new GA_Individual[0];
 	
+	protected Base_Fitness m_fitness = null;
+
+	
 	private int m_bestInd  = 0;
 	protected double m_avgFitness = 0;
 	protected double m_benchmarkScore = 0;
@@ -94,6 +97,18 @@ public class GA_Population
 	public void setPopulation(GA_Individual[] pop)
 	{
 		this.m_pop = pop;
+	}
+	
+	public void setBuilder(BasicBuilder b)
+	{
+		// Nothing to do in this class.
+		// Not abstract because not necessary for population to have a builder.
+	}
+
+	public void setFitness(BasicBuilder f)
+	{
+		// Nothing to do in this class.
+		// Not abstract because not necessary for population to have a fitness object.
 	}
 
 	public void setInd(GA_Individual I, int i)
