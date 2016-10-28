@@ -2,7 +2,7 @@ package popPack.indPack;
 
 import popPack.BasicBuilder;
 
-public class GA_IntVector_Individual extends GA_Individual
+abstract public class GA_IntVector_Individual extends GA_Individual
 {
 	private int maxIntVal = Integer.MAX_VALUE;
 	
@@ -19,6 +19,11 @@ public class GA_IntVector_Individual extends GA_Individual
 		public GA_Int_Atom(int val)
 		{
 			gene = val;
+		}
+		
+		public int getGene()
+		{
+			return gene;
 		}
 		
 		public void mutateAtom()
@@ -59,24 +64,36 @@ public class GA_IntVector_Individual extends GA_Individual
 	{
 		return maxIntVal;
 	}
+
+	public int[] getGenomeInInts()
+	{
+		int[] genome = new int[getGenomeSize()];
+		for (int i = 0; i < getGenomeSize(); i++)
+		{
+			genome[i] = ((GA_Int_Atom)getGene(i)).getGene();
+		}
+		return genome;
+	}
+
 	
-	@Override
-	public GA_Individual selfReplicate()
-	{
-		return new GA_IntVector_Individual(this);
-	}
+	
+//	@Override
+//	abstract public GA_Individual selfReplicate()
+//	{
+//		return new GA_IntVector_Individual(this);
+//	}
 
-	@Override
-	public void calculateFitness()
-	{
-		throw new RuntimeException("No fitness function defined");
-	}
-
-	@Override
-	public double calculateBenchmark()
-	{
-		throw new RuntimeException("No benchmark score defined");
-	}
+//	@Override
+//	public void calculateFitness()
+//	{
+//		throw new RuntimeException("No fitness function defined");
+//	}
+//
+//	@Override
+//	public double calculateBenchmark()
+//	{
+//		throw new RuntimeException("No benchmark score defined");
+//	}
 
 	@Override
 	public void development(BasicBuilder builder)

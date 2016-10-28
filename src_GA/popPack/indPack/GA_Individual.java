@@ -61,7 +61,7 @@ abstract public class GA_Individual
 	{
 		return m_genome;
 	}
-		
+	
 	public GA_Atom getGene(int idx)
 	{
 		return m_genome[idx];
@@ -290,7 +290,7 @@ abstract public class GA_Individual
 	/**
 	 * 
 	 * @param ind Individual to compare with.
-	 * @return The edit distance between the marker vectors.
+	 * @return The edit distance (no insertion/deletions) between the marker vectors.
 	 */
 	public int markerDistance(GA_Individual ind)
 	{

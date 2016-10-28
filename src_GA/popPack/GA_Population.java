@@ -252,11 +252,12 @@ public class GA_Population
 				idxsOfCandidates[j] = (int)(Math.floor(Math.random() * getPopSize()));
 				
 				// Make sure candidate doesn't already have too many neighbors
-				// in selected new_pop (unless you fail 20 times).
-				for (int k = 0; k < 20 && m_crowdingFlag
+				// in selected new_pop (unless you fail 40 times).
+				for (int k = 0; k < 40 && m_crowdingFlag
 						&& tooManyNeighbors(new_pop, getIndividual(idxsOfCandidates[j])); k++)
 				{
 					idxsOfCandidates[j] = (int)(Math.floor(Math.random() * getPopSize()));
+//					if (k==30) System.out.println("Zeeep!");
 				}
 				
 				// Don't choose the same candidate twice

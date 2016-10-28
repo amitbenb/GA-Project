@@ -8,6 +8,7 @@ import java.util.Scanner;
 abstract public class Base_Runner
 {
 	public static boolean DEBUG_OUTPUT = true;
+	public static int FORMAT_CODE = -1;
 
 	public static FileWriter fitOut;
 	public static FileWriter smallOut;
@@ -104,7 +105,75 @@ abstract public class Base_Runner
 		return retVal;
 	}
 
+	public static void collectBasicExperimentData(Scanner inF) 
+	{
+		// Getting parameter files format code.
+		inF.nextLine();	// Getting rid of non-data line.
+		Base_Runner.FORMAT_CODE = inF.nextInt(); 
+		inF.nextLine();	// Clear line
+		
+		inF.nextLine();	// Getting rid of non-data line.
+		Base_Runner.DEBUG_OUTPUT = inF.nextBoolean(); 
+		inF.nextLine();	// Clear line
+		
+		inF.nextLine();	// Getting rid of non-data line.
+		Base_Runner.NUMBER_OF_EXPERIMENTS = inF.nextInt(); // Not useful at the moment
+		inF.nextLine();	// Clear line
+		
+		inF.nextLine();	// Getting rid of non-data line.
+		Base_Runner.NUMBER_OF_STAGES = inF.nextInt(); // Not useful at the moment
+		inF.nextLine();	// Clear line
+		
+	}
 
+	public static void collectBasicExperimentStageData(Scanner inF) throws Exception
+	{
+		inF.nextLine();	// Getting rid of non-data line.
+		for (int i = 0; i < Base_Runner.runningStages.length;)
+		{
+//			System.out.println(i);
+			int numOfSameStages = inF.nextInt();
+			String popPathTemp = new String(inF.next());
+			inF.nextLine();	// ClearLine
+			for (int j = i; i < j + numOfSameStages; i++)
+			{
+				Base_Runner r_i = Base_Runner.runningStages[i];
+				r_i.popDirPartPath = new String(popPathTemp);
+				r_i.popDirFullPath = new String(Base_Runner.mainDir + r_i.popDirPartPath);
+			}
+		}
+		
+		// Evolutionary parameters.
+		inF.nextLine();	// Getting rid of non-data line.
+		for (int i = 0; i < Base_Runner.runningStages.length;)
+		{
+//			System.out.println("boop" + i);
+			int numOfSameStages = inF.nextInt();
+			String evoFileName = new String(inF.next()); 
+			inF.nextLine();	// ClearLine
+			for (int j = i; i < j + numOfSameStages; i++)
+			{
+				runningStages[i].collectEvoParameters(evoFileName, i);
+			}
+		}
+		
+		// Fitness and output parameters.
+		inF.nextLine();	// Getting rid of non-data line.
+		for (int i = 0; i < Base_Runner.runningStages.length;)
+		{
+			int numOfSameStages = inF.nextInt();
+			String fitFileName = new String(inF.next());
+			inF.nextLine();	// ClearLine
+			for (int j = i; i < j + numOfSameStages; i++)
+			{
+				runningStages[i].collectFitParameters(fitFileName, i);
+			}
+		}
+
+		
+	}
+	
+	
 	public void collectEvoParameters(String fileName, int idx)throws Exception
 	{
 		Scanner inF = new Scanner(new File(mainDir + fileName));
